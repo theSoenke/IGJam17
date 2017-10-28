@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
-	public float health = 100.0f;
     public float switchDirectionProbability;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
@@ -71,13 +68,5 @@ public class EnemyController : MonoBehaviour
 
 	public void Die() {
 		Destroy (gameObject);
-	}
-
-	public void InflictDamage() {
-		health -= 50.0f;
-
-		if (health < 0.0f) {
-			Die ();
-		}
 	}
 }

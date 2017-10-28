@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviour
 					print (prevInputVector);
 					candy.GetComponent<Rigidbody2D> ().AddForce (1000.0f * prevInputVector);
 				}
+
+			    if (i == 2)
+			    {
+			        var pos = transform.position + new Vector3(prevInputVector.x + 1, prevInputVector.y+1,0);
+			        //GameManager.Instance.TileManager.BuildWall(pos);
+			    }
 			}
 		}
     }

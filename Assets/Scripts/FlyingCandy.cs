@@ -15,7 +15,7 @@ public class FlyingCandy : MonoBehaviour {
 		}
 		var enemyController = collision.gameObject.GetComponent<EnemyController>();
 		if (enemyController != null) {
-			enemyController.InflictDamage();
+			enemyController.Die();
 			zombieHits ++;
 			if (zombieHits >= maxZombieHits) {
 				Destroy (gameObject);
