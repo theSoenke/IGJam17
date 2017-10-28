@@ -38,7 +38,6 @@ public class MapController : MonoBehaviour
     {
         _grid = GetComponent<Grid>();
         _gridInfo = GetComponent<GridInformation>();
-        DestroyTile(new Vector3(3, 33));
     }
 
     void Update()
@@ -63,7 +62,6 @@ public class MapController : MonoBehaviour
         foreach (var dir in directions)
         {
             var candidatePos = gridPos + dir;
-            gridPos += dir;
             var candidateTile = _foreground.GetTile(candidatePos);
             if (candidateTile != _indestructibleWallTile)
                 ExplodeCell(candidatePos);
