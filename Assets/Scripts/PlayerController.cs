@@ -1,6 +1,4 @@
 using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +16,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     private Rigidbody2D _rigidbody;
+    private int _bombs;
+    private int _candy;
 
     // Use this for initialization
     private void Start()
