@@ -7,10 +7,10 @@ public class EnemySpawn : MonoBehaviour
     public Enemy[] enemies;
     public Vector2 houseTopLeft;
     public Vector2 houseBottomRight;
-    public int maxSpawedEnimies = 50;
+    public int maxSpawnRate = 50;
 
     private float[] spawnWeights;
-    private int spawnedEnemies;
+    private float spawnedLastMinute;
 
     [System.Serializable]
     public struct Enemy
@@ -23,6 +23,14 @@ public class EnemySpawn : MonoBehaviour
     void Awake()
     {
         spawnWeights = NormalizedSpawnWeight();
+    }
+
+    void Update()
+    {
+        if (spawnedLastMinute > 0)
+        {
+            spawnedLastMinute -= Time.deltaTime / 60;
+        }
     }
 
     public void InitialSpawn()
@@ -74,17 +82,16 @@ public class EnemySpawn : MonoBehaviour
                 break;
             }
         }
-
     }
 
     private void Spawn(Vector3 pos)
     {
-        if (spawnedEnemies >= maxSpawedEnimies) return;
+        if (spawnedLastMinute >= maxSpawnRate) return;
 
         var item = GetSpawnEnemy(spawnWeights);
         var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
-        spawnedEnemies++;
+        spawnedLastMinute++;
     }
 
 

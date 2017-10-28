@@ -6,7 +6,7 @@ public class ItemSpawn : MonoBehaviour
     public float spawnProbability = 0.2f;
     public Item[] items;
     [Range(0,100)]
-    public int maxSpawnRate = 1;
+    public int maxSpawnRate = 50;
 
     private float[] spawnWeights;
     private float spawnedLastMinute;
