@@ -4,8 +4,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region exposed fields
-    [SerializeField]
-    private PlayerInventory _inventory;
     public string[] _inputUseItem;
     [SerializeField]
     private float _movementSpeed = 1.0f;
@@ -18,6 +16,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     private Rigidbody2D _rigidbody;
+    private PlayerInventory _inventory;
+
 
     // Use this for initialization
     private void Start()
