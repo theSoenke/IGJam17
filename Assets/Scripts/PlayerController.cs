@@ -63,4 +63,8 @@ public class PlayerController : MonoBehaviour
         _inventory[(int)item.Type] = item;
         item.IsPickedUp = true;
     }
+
+	public Vector3 GetPosition() {
+		return GetComponent<Transform> ().position;
+	}
 }

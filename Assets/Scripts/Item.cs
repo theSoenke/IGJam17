@@ -27,6 +27,15 @@ namespace Assets.Scripts
         protected Collider2D _collider;
         protected PlayerController _player;
 
+		public ItemType Type
+		{
+			get
+			{
+				return _itemType;
+			}
+		}
+			
+		private bool _isPickedUp;
         public bool IsPickedUp
         {
             get
@@ -41,16 +50,10 @@ namespace Assets.Scripts
             }
         }
 
-        public ItemType Type
-        {
-            get
-            {
-                return _itemType;
-            }
-        }
-
-        private bool _isPickedUp;
-
+		public virtual bool CanBePickedUp() {
+			return True;
+		}
+				
         private void Start()
         {
             Initialize();
@@ -59,7 +62,7 @@ namespace Assets.Scripts
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null && !IsPickedUp)
+			if (player != null && !IsPickedUp && CanBePickedUp())
             {
                 player.PickUpItem(this);
                 _player = player;
@@ -75,7 +78,6 @@ namespace Assets.Scripts
 
         public virtual void Use()
         {
-            
         }
     }
 }
