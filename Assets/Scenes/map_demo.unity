@@ -348,6 +348,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &698644377
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663392671628642, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6641793cd7b54384696f751f1fa8bd99, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &973198422
 Prefab:
   m_ObjectHideFlags: 0
@@ -699,6 +741,7 @@ MonoBehaviour:
     probability: 1
   houseTopLeft: {x: 0, y: 0}
   houseBottomRight: {x: 0, y: 0}
+  maxSpawedEnimies: 50
 --- !u!4 &1664447052
 Transform:
   m_ObjectHideFlags: 0
@@ -924,7 +967,7 @@ Prefab:
         type: 2}
       propertyPath: _prefabBomb
       value: 
-      objectReference: {fileID: 1606380005102918, guid: 9a84c063e59444ab4a9c7b43b1ed08a4,
+      objectReference: {fileID: 1914143791406500, guid: 6641793cd7b54384696f751f1fa8bd99,
         type: 2}
     - target: {fileID: 114305538826493668, guid: 547beb09882d31849a0aaba140997495,
         type: 2}

@@ -11,13 +11,16 @@ public class PlayerController : MonoBehaviour
     private string _inputAxisX = "Horizontal";
     [SerializeField]
     private string _inputAxisY = "Vertical";
-	public GameObject _prefabCandy;
-	private Vector3 prevInputVector;
+    [SerializeField]
+    private GameObject _prefabCandy;
+    [SerializeField]
+    private GameObject _prefabBomb;
     #endregion
 
     private Rigidbody2D _rigidbody;
     private PlayerInventory _inventory;
     private Vector3 nextWallPos;
+    private Vector3 prevInputVector;
 
 
     // Use this for initialization
@@ -48,6 +51,14 @@ public class PlayerController : MonoBehaviour
 			var inputName = _inputUseItem[i];
 			if (Input.GetButtonDown(inputName))
 			{
+			    if (i == 0)
+			    {
+			        var pos = new Vector3(
+			            Mathf.Floor(transform.position.x) + 0.5f,
+			            Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
+                    Instantiate(_prefabBomb, pos, Quaternion.identity);
+                }
+
 				if (i == 1) {
 					var pos = new Vector3 (
 						Mathf.Floor(transform.position.x) + 0.5f,
