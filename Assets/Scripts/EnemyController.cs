@@ -2,45 +2,77 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
-	public float switchDirectionProbability;
-	private Rigidbody2D _rigidbody;
-	Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+public class EnemyController : MonoBehaviour
+{
+    public float switchDirectionProbability;
+    private Rigidbody2D _rigidbody;
+    private Animator _animator;
+    Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
-	// Use this for initialization
-	private void Start()
-	{
-		_rigidbody = GetComponent<Rigidbody2D>();
-	}
+    private const string ANIM_MOVE_LEFT = "MoveLeft";
+    private const string ANIM_MOVE_RIGHT = "MoveRight";
+    private const string ANIM_MOVE_UP = "MoveTop";
+    private const string ANIM_MOVE_DOWN = "MoveDown";
+    private const string ANIM_MOVEMENT_SPEED = "MovementSpeed";
 
-	// Update is called once per frame
-	void Update () {
-		var random = Random.Range(0.0f, 1.0f);
-		if (random > switchDirectionProbability) {
-			int randomHeading = Random.Range (0, 4);
-			float vert = 0.0f, horiz = 0.0f;
-			switch (randomHeading) {
-			case 0:
-				vert = -1.0f;
-				break;
-			case 1:
-				vert = 1.0f;
-				break;
-			case 2:
-				horiz = -1.0f;
-				break;
-			case 3:
-				horiz = 1.0f;
-				break;
-			}
-			var randomDirection = new Vector3 (horiz, vert);
-			velocity = randomDirection;
-			var player = GameObject.FindGameObjectWithTag ("Player");
-			var positionPlayer = player.GetComponent<Transform> ().position;
-			var enemyToPlayer = positionPlayer - GetComponent<Transform> ().position;
-			var enemyToPlayerDistance = enemyToPlayer.magnitude;
+    // Use this for initialization
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+    }
 
-		}
-		_rigidbody.velocity = 0.5f * velocity;
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        var random = Random.Range(0.0f, 1.0f);
+        if (random > switchDirectionProbability)
+        {
+            int randomHeading = Random.Range(0, 4);
+            float vert = 0.0f, horiz = 0.0f;
+            switch (randomHeading)
+            {
+                case 0:
+                    vert = -1.0f;
+                    break;
+                case 1:
+                    vert = 1.0f;
+                    break;
+                case 2:
+                    horiz = -1.0f;
+                    break;
+                case 3:
+                    horiz = 1.0f;
+                    break;
+            }
+            var randomDirection = new Vector3(horiz, vert);
+            velocity = randomDirection;
+            var player = GameObject.FindGameObjectWithTag("Player");
+            var positionPlayer = player.GetComponent<Transform>().position;
+            var enemyToPlayer = positionPlayer - GetComponent<Transform>().position;
+            var enemyToPlayerDistance = enemyToPlayer.magnitude;
+
+        }
+        UpdateAnimationStateMachine();
+        _rigidbody.velocity = 0.5f * velocity;
+    }
+
+    private void UpdateAnimationStateMachine()
+    {
+        var moveDirection = _rigidbody.velocity.normalized;
+        var speed = _rigidbody.velocity.magnitude;
+
+        _animator.SetFloat(ANIM_MOVEMENT_SPEED, speed);
+
+        if (moveDirection.x <= 0 && Mathf.Abs(moveDirection.x) >= Mathf.Abs(moveDirection.y))
+            _animator.SetTrigger(ANIM_MOVE_LEFT);
+        else if (moveDirection.x > 0 && Mathf.Abs(moveDirection.x) >= Mathf.Abs(moveDirection.y))
+            _animator.SetTrigger(ANIM_MOVE_RIGHT);
+        else if (moveDirection.y <= 0 && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y))
+            _animator.SetTrigger(ANIM_MOVE_DOWN);
+        else if (moveDirection.y > 0 && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y))
+            _animator.SetTrigger(ANIM_MOVE_UP);
+    }
 }
