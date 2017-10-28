@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private void UpdatePosition()
     {
         var inputVector = new Vector3(Input.GetAxis(_inputAxisX), Input.GetAxis(_inputAxisY));
+		if (inputVector.sqrMagnitude >= 1.0f) {
+			inputVector = inputVector.normalized;
+		}
 
         var speedVector = inputVector * _movementSpeed;
 
