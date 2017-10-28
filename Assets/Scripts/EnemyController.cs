@@ -41,6 +41,6 @@ public class EnemyController : MonoBehaviour {
 			var enemyToPlayerDistance = enemyToPlayer.magnitude;
 
 		}
-		_rigidbody.velocity = 2.0f * velocity;
+		_rigidbody.velocity = 0.5f * velocity;
 	}
 }

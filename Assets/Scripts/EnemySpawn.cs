@@ -24,12 +24,13 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn (Tilemap tilemap)
     {
-        var gridSize = tilemap.size;
-        for (int y = 0; y < gridSize.y; y++)
+		var gridSize = tilemap.size;
+
+        for (int y = 20; y < 50; y++)
         {
-            for (int x = 0; x < gridSize.x; x++)
+            for (int x = -20; x < 20; x++)
             {
-                var tilePos = new Vector3Int(x, y, 0);
+				var tilePos = new Vector3Int(x, y, 0);
                 var tile = tilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
