@@ -9,10 +9,20 @@ namespace Assets.Scripts
     [Serializable, RequireComponent(typeof(Collider2D))]
     public class Item : MonoBehaviour
     {
+        public enum ItemType
+        {
+            Bomb,
+            Wall,
+            Gun,
+            Mine
+        }
+
         [SerializeField]
         private GameObject _pickupSprite;
         [SerializeField]
         private GameObject _itemSprite;
+        [SerializeField]
+        private ItemType _itemType;
 
         protected Collider2D _collider;
         protected PlayerController _player;
@@ -28,6 +38,14 @@ namespace Assets.Scripts
                 _isPickedUp = value;
                 _pickupSprite.SetActive(!value);
                 _itemSprite.SetActive(value);
+            }
+        }
+
+        public ItemType Type
+        {
+            get
+            {
+                return _itemType;
             }
         }
 
@@ -48,7 +66,7 @@ namespace Assets.Scripts
             }
         }
 
-        public virtual void Initialize()
+        private void Initialize()
         {
             _isPickedUp = false;
             _collider = GetComponent<Collider2D>();
