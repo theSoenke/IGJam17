@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions.Comparers;
 using UnityEngine.Tilemaps;
 
 public class EnemySpawn : MonoBehaviour
 {
     public Tilemap tilemap;
+    [Range(0,1)]
     public float spawnProbability = 0.2f;
-    public int seed;
     public Enemy[] enemies;
 
     [System.Serializable]
@@ -18,7 +17,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void InitialSpawn ()
 	{
-	    Random.seed = seed;
+	    var spawnWeights = NormalizedSpawnWeight();
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -29,11 +28,11 @@ public class EnemySpawn : MonoBehaviour
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
-                    var random = Random.Range(0, 1);
+                    float random = Random.Range(0, 1f);
                     if (random < spawnProbability)
                     {
                         var pos = new Vector3(x+0.5f,y-0.5f,0);
-                        var enemy = GetSpawnEnemy();
+                        var enemy = GetSpawnEnemy(spawnWeights);
                         var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
                     }
@@ -42,7 +41,24 @@ public class EnemySpawn : MonoBehaviour
         }
     }
 
-    private Enemy GetSpawnEnemy()
+    private Enemy GetSpawnEnemy(float[] weights)
+    {
+        float rand = Random.Range(0, 1f);
+        var enemy = new Enemy();
+        double cumulative = 0.0;
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            cumulative += weights[i];
+            if (rand < cumulative)
+            {
+                enemy = enemies[i];
+            }
+        }
+
+        return enemy;
+    }
+
+    private float[] NormalizedSpawnWeight()
     {
         var weights = new float[enemies.Length];
         var weightSum = 0f;
@@ -56,18 +72,6 @@ public class EnemySpawn : MonoBehaviour
             weights[i] = enemies[i].spawnProbability / weightSum;
         }
 
-        float rand = Random.Range(0, 1f);
-        var result = new Enemy();
-        double cumulative = 0.0;
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            cumulative += weights[i];
-            if (rand < cumulative)
-            {
-                result = enemies[i];
-            }
-        }
-
-        return result;
+        return weights;
     }
 }

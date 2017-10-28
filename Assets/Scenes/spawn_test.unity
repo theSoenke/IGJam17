@@ -5189,11 +5189,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 579658338}
-  spawnProbability: 0.2
+  spawnProbability: 0.1
   seed: 0
   enemies:
   - prefab: {fileID: 1426072967134380, guid: 85942482a8280f148ae94f7947e005f2, type: 2}
-    spawnProbability: 0.2
+    spawnProbability: 0.9
   - prefab: {fileID: 1426072967134380, guid: 85942482a8280f148ae94f7947e005f2, type: 2}
     spawnProbability: 0.1
 --- !u!4 &1664447052
