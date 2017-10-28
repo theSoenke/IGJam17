@@ -7,7 +7,7 @@ public class EnemySpawn : MonoBehaviour
     public Enemy[] enemies;
     public Vector2 houseTopLeft;
     public Vector2 houseBottomRight;
-
+    public int maxSpawedEnimies = 50;
 
     private float[] spawnWeights;
     private int spawnedEnemies;
@@ -79,6 +79,8 @@ public class EnemySpawn : MonoBehaviour
 
     private void Spawn(Vector3 pos)
     {
+        if (spawnedEnemies >= maxSpawedEnimies) return;
+
         var item = GetSpawnEnemy(spawnWeights);
         var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
