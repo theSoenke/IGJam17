@@ -43,7 +43,9 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetButtonDown(inputName))
 			{
 				if (i == 1) {
-					var pos = new Vector3 (transform.position.x + 0.5f, transform.position.y + 0.5f, -7.0f);
+					var pos = new Vector3 (
+						Mathf.Floor(transform.position.x) + 0.5f,
+						Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
 					var candy = Instantiate (_prefabCandy, pos, Quaternion.identity);
 					print (prevInputVector);
 					candy.GetComponent<Rigidbody2D> ().AddForce (1000.0f * prevInputVector);

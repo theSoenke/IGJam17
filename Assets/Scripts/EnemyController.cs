@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
+	public float health = 100.0f;
     public float switchDirectionProbability;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
@@ -36,15 +37,19 @@ public class EnemyController : MonoBehaviour
             {
                 case 0:
                     vert = -1.0f;
+                    _animator.SetTrigger(ANIM_MOVE_DOWN);
                     break;
                 case 1:
                     vert = 1.0f;
+                    _animator.SetTrigger(ANIM_MOVE_UP);
                     break;
                 case 2:
                     horiz = -1.0f;
+                    _animator.SetTrigger(ANIM_MOVE_LEFT);
                     break;
                 case 3:
                     horiz = 1.0f;
+                    _animator.SetTrigger(ANIM_MOVE_RIGHT);
                     break;
             }
             var randomDirection = new Vector3(horiz, vert);
@@ -55,24 +60,16 @@ public class EnemyController : MonoBehaviour
             var enemyToPlayerDistance = enemyToPlayer.magnitude;
 
         }
-        UpdateAnimationStateMachine();
         _rigidbody.velocity = 0.5f * velocity;
     }
 
-    private void UpdateAnimationStateMachine()
+    private void OnDrawGizmos()
     {
-        var moveDirection = _rigidbody.velocity.normalized;
-        var speed = _rigidbody.velocity.magnitude;
-
-        _animator.SetFloat(ANIM_MOVEMENT_SPEED, speed);
-
-        if (moveDirection.x <= 0 && Mathf.Abs(moveDirection.x) >= Mathf.Abs(moveDirection.y))
-            _animator.SetTrigger(ANIM_MOVE_LEFT);
-        else if (moveDirection.x > 0 && Mathf.Abs(moveDirection.x) >= Mathf.Abs(moveDirection.y))
-            _animator.SetTrigger(ANIM_MOVE_RIGHT);
-        else if (moveDirection.y <= 0 && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y))
-            _animator.SetTrigger(ANIM_MOVE_DOWN);
-        else if (moveDirection.y > 0 && Mathf.Abs(moveDirection.x) < Mathf.Abs(moveDirection.y))
-            _animator.SetTrigger(ANIM_MOVE_UP);
+        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
+        Gizmos.DrawLine(transform.position, transform.position + dir);
     }
+
+	public void InflictDamage() {
+		health -= 50.0f;
+	}
 }
