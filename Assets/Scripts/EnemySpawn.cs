@@ -19,11 +19,10 @@ public class EnemySpawn : MonoBehaviour
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
-                    Random.seed = 0;
-                    var random = Random.Range(0, 1);
+					float random = Random.Range(0.0f, 1.0f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x+0.5f,y-0.5f,0);
+                        var pos = new Vector3(x+0.5f,y-0.5f, -4.0f);
                         var enemy = Instantiate(enemies[0], pos, Quaternion.identity);
                         enemy.transform.SetParent(transform);
                     }
