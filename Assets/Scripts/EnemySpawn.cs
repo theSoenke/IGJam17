@@ -3,12 +3,20 @@ using UnityEngine.Tilemaps;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public Tilemap tilemap;
-    public float spawnProbability;
-    public GameObject[] enemies;
+    [Range(0,1)]
+    public float spawnProbability = 0.2f;
+    public Enemy[] enemies;
 
-    public void InitialSpawn ()
-	{
+    [System.Serializable]
+    public struct Enemy
+    {
+        public GameObject prefab;
+        public float probability;
+    }
+
+    public void Spawn (Tilemap tilemap)
+    {
+        var spawnWeights = NormalizedSpawnWeight();
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -19,16 +27,49 @@ public class EnemySpawn : MonoBehaviour
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
-                    Random.seed = 0;
-                    var random = Random.Range(0, 1);
+                    float random = Random.Range(0.0f, 1.0f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x+0.5f,y-0.5f,0);
-                        var enemy = Instantiate(enemies[0], pos, Quaternion.identity);
-                        enemy.transform.SetParent(transform);
+                        var pos = new Vector3(x+0.5f,y-0.5f, -4.0f);
+                        var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
+                        enemyGameObject.transform.SetParent(transform);
                     }
                 }
             }
         }
+    }
+
+    private Enemy GetSpawnEnemy(float[] weights)
+    {
+        float rand = Random.Range(0, 1f);
+        var enemy = new Enemy();
+        double cumulative = 0.0;
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            cumulative += weights[i];
+            if (rand < cumulative)
+            {
+                enemy = enemies[i];
+            }
+        }
+
+        return enemy;
+    }
+
+    private float[] NormalizedSpawnWeight()
+    {
+        var weights = new float[enemies.Length];
+        var weightSum = 0f;
+        foreach (Enemy enemy in enemies)
+        {
+            weightSum += enemy.probability;
+        }
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            weights[i] = enemies[i].probability / weightSum;
+        }
+
+        return weights;
     }
 }
