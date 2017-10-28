@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private PlayerInventory _inventory;
+    private Vector3 nextWallPos;
 
 
     // Use this for initialization
@@ -32,6 +33,11 @@ public class PlayerController : MonoBehaviour
     {
         UpdatePosition();
         CheckInputs();
+
+        if (Vector3Int.FloorToInt(transform.position) != nextWallPos)
+        {
+            GameManager.Instance.mapController.BuildWall(nextWallPos);
+        }
     }
 
     private void CheckInputs()
@@ -53,9 +59,8 @@ public class PlayerController : MonoBehaviour
 
 			    if (i == 2)
 			    {
-			        var pos = transform.position + new Vector3(prevInputVector.x + 1, prevInputVector.y+1,0);
-			        //GameManager.Instance.TileManager.BuildWall(pos);
-			    }
+			        nextWallPos = Vector3Int.FloorToInt(transform.position);
+                }
 			}
 		}
     }

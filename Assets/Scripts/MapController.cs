@@ -49,9 +49,13 @@ public class MapController : MonoBehaviour
         //TODO
     }
 
-    public void SetTile(Vector3 worldPosition)
+    public void BuildWall(Vector3 worldPosition)
     {
-        _foreground.SetTile(Vector3Int.RoundToInt(worldPosition), _destructibleWallTile);
+        var tile = _foreground.GetTile(Vector3Int.FloorToInt(worldPosition));
+        if (tile == null)
+        {
+            _foreground.SetTile(Vector3Int.RoundToInt(worldPosition), _destructibleWallTile);
+        }
     }
 
     private void ExplodeCell(Vector3Int position)
