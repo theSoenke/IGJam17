@@ -59,7 +59,7 @@ namespace Assets.Scripts
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
+            if (player != null && !IsPickedUp)
             {
                 player.PickUpItem(this);
                 _player = player;
