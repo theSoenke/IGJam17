@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
+	public float health = 100.0f;
     public float switchDirectionProbability;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
@@ -62,9 +63,21 @@ public class EnemyController : MonoBehaviour
         _rigidbody.velocity = 0.5f * velocity;
     }
 
-    private void OnDrawGizmos()
-    {
-        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
-        Gizmos.DrawLine(transform.position, transform.position + dir);
-    }
+//    private void OnDrawGizmos()
+//    {
+//        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
+//        Gizmos.DrawLine(transform.position, transform.position + dir);
+//    }
+
+	public void Die() {
+		Destroy (gameObject);
+	}
+
+	public void InflictDamage() {
+		health -= 50.0f;
+
+		if (health < 0.0f) {
+			Die ();
+		}
+	}
 }
