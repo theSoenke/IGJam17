@@ -7,7 +7,7 @@ public class EnemySpawn : MonoBehaviour
     public float spawnProbability;
     public GameObject[] enemies;
 
-    void Start ()
+    public void InitialSpawn ()
 	{
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
@@ -31,8 +31,4 @@ public class EnemySpawn : MonoBehaviour
             }
         }
     }
-
-    void Update () {
-		
-	}
 }
