@@ -3,9 +3,10 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-	public static GameManager Instance = null;
+	public static GameManager Instance;
 	
-    public Tilemap tilemap;
+    public MapController mapController;
+    public PlayerController player;
     public EnemySpawn enemySpawn;
     public ItemSpawn itemSpawn;
 
@@ -14,11 +15,12 @@ public class GameManager : MonoBehaviour
 			throw new MissingReferenceException ();
 		}
 		Instance = this;
+	    player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 	}
 
     void Start ()
 	{
-        enemySpawn.Spawn(tilemap);
-        itemSpawn.Spawn(tilemap);
+        enemySpawn.InitialSpawn();
+        itemSpawn.InitialSpawn();
     }
 }

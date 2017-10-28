@@ -11,12 +11,16 @@ public class PlayerController : MonoBehaviour
     private string _inputAxisX = "Horizontal";
     [SerializeField]
     private string _inputAxisY = "Vertical";
-	public GameObject _prefabCandy;
-	private Vector3 prevInputVector;
+    [SerializeField]
+    private GameObject _prefabCandy;
+    [SerializeField]
+    private GameObject _prefabBomb;
     #endregion
 
     private Rigidbody2D _rigidbody;
     private PlayerInventory _inventory;
+    private Vector3 nextWallPos;
+    private Vector3 prevInputVector;
 
 
     // Use this for initialization
@@ -32,6 +36,11 @@ public class PlayerController : MonoBehaviour
     {
         UpdatePosition();
         CheckInputs();
+
+        if (Vector3Int.FloorToInt(transform.position) != nextWallPos)
+        {
+            GameManager.Instance.mapController.BuildWall(nextWallPos);
+        }
     }
 
     private void CheckInputs()
@@ -42,6 +51,14 @@ public class PlayerController : MonoBehaviour
 			var inputName = _inputUseItem[i];
 			if (Input.GetButtonDown(inputName))
 			{
+			    if (i == 0)
+			    {
+			        var pos = new Vector3(
+			            Mathf.Floor(transform.position.x) + 0.5f,
+			            Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
+                    Instantiate(_prefabBomb, pos, Quaternion.identity);
+                }
+
 				if (i == 1) {
 					var pos = new Vector3 (
 						Mathf.Floor(transform.position.x) + 0.5f,
@@ -50,6 +67,11 @@ public class PlayerController : MonoBehaviour
 					print (prevInputVector);
 					candy.GetComponent<Rigidbody2D> ().AddForce (1000.0f * prevInputVector);
 				}
+
+			    if (i == 2)
+			    {
+			        nextWallPos = Vector3Int.FloorToInt(transform.position);
+                }
 			}
 		}
     }
@@ -72,4 +94,9 @@ public class PlayerController : MonoBehaviour
     {
         _inventory.Add(collectable);
 	}
+
+    public void Die()
+    {
+        print("I DIED!!!");
+    }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlyingCandy : MonoBehaviour {
 	private int zombieHits = 0;
@@ -15,7 +13,7 @@ public class FlyingCandy : MonoBehaviour {
 		}
 		var enemyController = collision.gameObject.GetComponent<EnemyController>();
 		if (enemyController != null) {
-			enemyController.InflictDamage();
+			enemyController.Die();
 			zombieHits ++;
 			if (zombieHits >= maxZombieHits) {
 				Destroy (gameObject);

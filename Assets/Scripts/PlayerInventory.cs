@@ -10,8 +10,6 @@ public class PlayerInventory : MonoBehaviour
     public Color empty;
     public Color filled;
 
-    public Item[] items;
-
     public int bombs;
     private int candys;
     private int walls;

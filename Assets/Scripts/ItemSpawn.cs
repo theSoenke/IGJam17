@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class ItemSpawn : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class ItemSpawn : MonoBehaviour
     public float spawnProbability = 0.2f;
     public Item[] items;
     [Range(0,100)]
-    public int maxSpawnRate = 1;
+    public int maxSpawnRate = 50;
 
     private float[] spawnWeights;
     private float spawnedLastMinute;
@@ -33,35 +32,37 @@ public class ItemSpawn : MonoBehaviour
         }
     }
 
-    public void Spawn(int x, int y)
+    public void Spawn(Vector3 pos)
     {
         if (spawnedLastMinute > maxSpawnRate) return;
-
         var item = GetSpawnItem(spawnWeights);
-        var itemGameObject = Instantiate(item.prefab, new Vector3(x, y, 0), Quaternion.identity);
+        var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
         spawnedLastMinute++;
     }
 
-    public void Spawn(Tilemap tilemap)
+    public void InitialSpawn()
     {
-        var gridSize = tilemap.size;
+        var mapController = GameManager.Instance.mapController;
+        var gridSize = mapController.BackgroundTilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
-            for (int x = 0; x < gridSize.x; x++)
+            for (int x = -20; x < gridSize.x; x++)
             {
                 var tilePos = new Vector3Int(x, y, 0);
-                var tile = tilemap.GetTile(tilePos);
+
+                if (mapController.ObstacleTilemap.GetTile(tilePos))
+                    continue;
+
+                var tile = mapController.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
                     float random = Random.Range(0, 1f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x + 0.5f, y - 0.5f, -1);
-                        var item = GetSpawnItem(spawnWeights);
-                        var enemyGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
-                        enemyGameObject.transform.SetParent(transform);
+                        var pos = new Vector3(x + 0.5f, y + 0.5f, -1);
+                        Spawn(pos);
                     }
                 }
             }
