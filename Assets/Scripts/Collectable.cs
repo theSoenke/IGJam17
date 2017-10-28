@@ -17,7 +17,6 @@ public class Collectable : MonoBehaviour
         var player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            print("dollected item");
             player.PickUpItem(this);
             Destroy(gameObject);
         }

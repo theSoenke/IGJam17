@@ -37,20 +37,13 @@ public class PlayerController : MonoBehaviour
         for(var i = 0; i < 4; i++)
         {
             var inputName = _inputUseItem[i];
-            Item item = null;
-            if (i == 0)
+            if (Input.GetButtonDown(inputName))
             {
-                item = _inventory.bomb;
-            }
-
-            if (i == 1)
-            {
-                item = _inventory.candy;
-            }
-
-            if (Input.GetButtonDown(inputName) && item != null)
-            {
-                item.Use();
+                if (i < _inventory.items.Length)
+                {
+                    Item item = _inventory.items[i];
+                    item.Use();
+                }
             }
         }
     }
