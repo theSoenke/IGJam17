@@ -33,14 +33,9 @@ public class ItemSpawn : MonoBehaviour
         }
     }
 
-    private bool HasSpawnItem()
-    {
-        return true;
-    }
-
     public void Spawn(int x, int y)
     {
-        if (!HasSpawnItem()) return;
+        if (spawnedLastMinute > maxSpawnRate) return;
 
         var item = GetSpawnItem(spawnWeights);
         var itemGameObject = Instantiate(item.prefab, new Vector3(x, y, 0), Quaternion.identity);
