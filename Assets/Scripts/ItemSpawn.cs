@@ -62,7 +62,7 @@ public class ItemSpawn : MonoBehaviour
                     float random = Random.Range(0, 1f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x + 0.5f, y - 0.5f, -1);
+                        var pos = new Vector3(x + 0.5f, y + 0.5f, -1);
                         var item = GetSpawnItem(spawnWeights);
                         var enemyGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);

@@ -6,6 +6,9 @@ public class EnemySpawn : MonoBehaviour
     [Range(0, 1)]
     public float spawnProbability = 0.2f;
     public Enemy[] enemies;
+    public Vector2 houseTopLeft;
+    public Vector2 houseBottomRight;
+
 
     private float[] weights;
 
@@ -36,6 +39,11 @@ public class EnemySpawn : MonoBehaviour
                 if (controller.ObstacleTilemap.GetTile(tilePos))
                     continue;
 
+                //is tile in house?
+                if (x >= houseTopLeft.x && x <= houseBottomRight.x
+                && y >= houseBottomRight.y && y <= houseTopLeft.y)
+                    continue;
+
                 var tile = controller.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
@@ -43,7 +51,7 @@ public class EnemySpawn : MonoBehaviour
                     float random = Random.Range(0.0f, 1.0f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x + 0.5f, y - 0.5f, -4.0f);
+                        var pos = new Vector3(x + 0.5f, y + 0.5f, -4.0f);
                         var enemy = GetSpawnEnemy(weights);
                         var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
