@@ -1,13 +1,11 @@
-using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using Boo.Lang;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     #region exposed fields
     [SerializeField]
-    private Item[] _inventory;
+    private PlayerInventory _inventory;
     public string[] _inputUseItem;
     [SerializeField]
     private float _movementSpeed = 1.0f;
@@ -23,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _inventory = new Item[4];
+        _inventory = GetComponent<PlayerInventory>();
     }
 
     // Update is called once per frame
@@ -39,8 +37,18 @@ public class PlayerController : MonoBehaviour
         for(var i = 0; i < 4; i++)
         {
             var inputName = _inputUseItem[i];
-            var item = _inventory[i];
-            if(Input.GetButtonDown(inputName) && item != null)
+            Item item = null;
+            if (i == 0)
+            {
+                item = _inventory.bomb;
+            }
+
+            if (i == 1)
+            {
+                item = _inventory.candy;
+            }
+
+            if (Input.GetButtonDown(inputName) && item != null)
             {
                 item.Use();
             }
@@ -58,11 +66,10 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = speedVector;
     }
 
-    public void PickUpItem(Item item)
+    public void PickUpItem(Collectable collectable)
     {
-        _inventory[(int)item.Type] = item;
-        item.IsPickedUp = true;
-    }
+        _inventory.Add(collectable);
+	}
 
 	public Vector3 GetPosition() {
 		return GetComponent<Transform> ().position;
