@@ -63,11 +63,11 @@ public class EnemyController : MonoBehaviour
         _rigidbody.velocity = 0.5f * velocity;
     }
 
-    private void OnDrawGizmos()
-    {
-        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
-        Gizmos.DrawLine(transform.position, transform.position + dir);
-    }
+//    private void OnDrawGizmos()
+//    {
+//        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
+//        Gizmos.DrawLine(transform.position, transform.position + dir);
+//    }
 
 	public void InflictDamage() {
 		health -= 50.0f;
