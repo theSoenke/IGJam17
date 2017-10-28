@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class ItemSpawn : MonoBehaviour
@@ -7,6 +9,8 @@ public class ItemSpawn : MonoBehaviour
     public float spawnProbability = 0.2f;
     public Item[] items;
 
+    private float[] weights;
+
     [System.Serializable]
     public struct Item
     {
@@ -14,9 +18,27 @@ public class ItemSpawn : MonoBehaviour
         public float probability;
     }
 
+    void Start()
+    {
+        weights = NormalizedSpawnWeight();
+    }
+
+    private bool HasSpawnItem()
+    {
+        return true;
+    }
+
+    public void Spawn(int x, int y)
+    {
+        if (!HasSpawnItem()) return;
+
+        var item = GetSpawnItem(weights);
+        var itemGameObject = Instantiate(item.prefab, new Vector3(x, y, 0), Quaternion.identity);
+        itemGameObject.transform.SetParent(transform);
+    }
+
     public void Spawn(Tilemap tilemap)
     {
-        var spawnWeights = NormalizedSpawnWeight();
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -31,7 +53,7 @@ public class ItemSpawn : MonoBehaviour
                     if (random < spawnProbability)
                     {
                         var pos = new Vector3(x + 0.5f, y - 0.5f, 0);
-                        var item = GetSpawnItem(spawnWeights);
+                        var item = GetSpawnItem(weights);
                         var enemyGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
                     }

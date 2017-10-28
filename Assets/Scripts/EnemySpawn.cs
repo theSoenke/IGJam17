@@ -11,7 +11,7 @@ public class EnemySpawn : MonoBehaviour
     public struct Enemy
     {
         public GameObject prefab;
-        public float spawnProbability;
+        public float probability;
     }
 
     public void Spawn (Tilemap tilemap)
@@ -63,12 +63,12 @@ public class EnemySpawn : MonoBehaviour
         var weightSum = 0f;
         foreach (Enemy enemy in enemies)
         {
-            weightSum += enemy.spawnProbability;
+            weightSum += enemy.probability;
         }
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            weights[i] = enemies[i].spawnProbability / weightSum;
+            weights[i] = enemies[i].probability / weightSum;
         }
 
         return weights;
