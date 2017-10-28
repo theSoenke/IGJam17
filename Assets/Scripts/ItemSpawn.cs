@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class ItemSpawn : MonoBehaviour
@@ -8,8 +6,11 @@ public class ItemSpawn : MonoBehaviour
     [Range(0, 1)]
     public float spawnProbability = 0.2f;
     public Item[] items;
+    [Range(0,100)]
+    public int maxSpawnRate = 1;
 
     private float[] weights;
+    public float spawnedLastMinute;
 
     [System.Serializable]
     public struct Item
@@ -21,6 +22,14 @@ public class ItemSpawn : MonoBehaviour
     void Start()
     {
         weights = NormalizedSpawnWeight();
+    }
+
+    void Update()
+    {
+        if (spawnedLastMinute > 0)
+        {
+            spawnedLastMinute -= Time.deltaTime;
+        }
     }
 
     private bool HasSpawnItem()
@@ -35,6 +44,7 @@ public class ItemSpawn : MonoBehaviour
         var item = GetSpawnItem(weights);
         var itemGameObject = Instantiate(item.prefab, new Vector3(x, y, 0), Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
+        spawnedLastMinute++;
     }
 
     public void Spawn(Tilemap tilemap)
