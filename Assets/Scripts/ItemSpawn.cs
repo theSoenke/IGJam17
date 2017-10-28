@@ -9,26 +9,27 @@ public class ItemSpawn : MonoBehaviour
     [Range(0,100)]
     public int maxSpawnRate = 1;
 
-    private float[] weights;
-    public float spawnedLastMinute;
+    private float[] spawnWeights;
+    private float spawnedLastMinute;
 
     [System.Serializable]
     public struct Item
     {
         public GameObject prefab;
+        [Range(0,1)]
         public float probability;
     }
 
-    void Start()
+    void Awake()
     {
-        weights = NormalizedSpawnWeight();
+        spawnWeights = NormalizedSpawnWeight();
     }
 
     void Update()
     {
         if (spawnedLastMinute > 0)
         {
-            spawnedLastMinute -= Time.deltaTime;
+            spawnedLastMinute -= Time.deltaTime / 60;
         }
     }
 
@@ -41,7 +42,7 @@ public class ItemSpawn : MonoBehaviour
     {
         if (!HasSpawnItem()) return;
 
-        var item = GetSpawnItem(weights);
+        var item = GetSpawnItem(spawnWeights);
         var itemGameObject = Instantiate(item.prefab, new Vector3(x, y, 0), Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
         spawnedLastMinute++;
@@ -63,7 +64,7 @@ public class ItemSpawn : MonoBehaviour
                     if (random < spawnProbability)
                     {
                         var pos = new Vector3(x + 0.5f, y - 0.5f, 0);
-                        var item = GetSpawnItem(weights);
+                        var item = GetSpawnItem(spawnWeights);
                         var enemyGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
                     }
