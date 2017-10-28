@@ -43,15 +43,19 @@ public class ItemSpawn : MonoBehaviour
         spawnedLastMinute++;
     }
 
-    public void Spawn(Tilemap tilemap)
+    public void Spawn(MapController controller)
     {
-        var gridSize = tilemap.size;
+        var gridSize = controller.BackgroundTilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
             for (int x = 0; x < gridSize.x; x++)
             {
                 var tilePos = new Vector3Int(x, y, 0);
-                var tile = tilemap.GetTile(tilePos);
+
+                if (controller.ObstacleTilemap.GetTile(tilePos))
+                    continue;
+
+                var tile = controller.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {

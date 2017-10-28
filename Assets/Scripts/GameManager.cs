@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance = null;
 	
-    public Tilemap tilemap;
+    public MapController mapController;
     public EnemySpawn enemySpawn;
     public ItemSpawn itemSpawn;
 
@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     void Start ()
 	{
-        enemySpawn.Spawn(tilemap);
-        itemSpawn.Spawn(tilemap);
+
+        enemySpawn.Spawn(mapController);
+        itemSpawn.Spawn(mapController);
     }
 }

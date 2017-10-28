@@ -3,7 +3,7 @@ using UnityEngine.Tilemaps;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [Range(0,1)]
+    [Range(0, 1)]
     public float spawnProbability = 0.2f;
     public Enemy[] enemies;
 
@@ -22,23 +22,28 @@ public class EnemySpawn : MonoBehaviour
         weights = NormalizedSpawnWeight();
     }
 
-    public void Spawn (Tilemap tilemap)
+    public void Spawn(MapController controller)
     {
-		var gridSize = tilemap.size;
+        var gridSize = controller.BackgroundTilemap.size;
 
         for (int y = 20; y < 50; y++)
         {
             for (int x = -20; x < 20; x++)
             {
-				var tilePos = new Vector3Int(x, y, 0);
-                var tile = tilemap.GetTile(tilePos);
+
+                var tilePos = new Vector3Int(x, y, 0);
+
+                if (controller.ObstacleTilemap.GetTile(tilePos))
+                    continue;
+
+                var tile = controller.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
                     float random = Random.Range(0.0f, 1.0f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x+0.5f,y-0.5f, -4.0f);
+                        var pos = new Vector3(x + 0.5f, y - 0.5f, -4.0f);
                         var enemy = GetSpawnEnemy(weights);
                         var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
