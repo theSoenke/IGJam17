@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     void Start ()
 	{
-        enemySpawn.Spawn(mapController);
-        itemSpawn.Spawn(mapController);
+        enemySpawn.InitialSpawn();
+        itemSpawn.InitialSpawn();
     }
 }

@@ -697,6 +697,8 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 1671324200318664, guid: 695e54a1d05f42847acf41cab14b9bb2, type: 2}
     probability: 1
+  houseTopLeft: {x: 0, y: 0}
+  houseBottomRight: {x: 0, y: 0}
 --- !u!4 &1664447052
 Transform:
   m_ObjectHideFlags: 0
@@ -738,6 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapController: {fileID: 977326739}
+  player: {fileID: 0}
   enemySpawn: {fileID: 1664447051}
   itemSpawn: {fileID: 2023432094}
 --- !u!4 &1734223423
@@ -1043,11 +1046,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c98f04d508f5d46a4813422908cd60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnProbability: 0.2
+  spawnProbability: 0.1
   items:
   - prefab: {fileID: 114512521328611790, guid: c485c892f5ddb9f4e99c195491f72d9a, type: 2}
     probability: 1
-  maxSpawnRate: 1
+  maxSpawnRate: 100
 --- !u!4 &2023432095
 Transform:
   m_ObjectHideFlags: 0

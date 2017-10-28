@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class EnemySpawn : MonoBehaviour
 {
@@ -10,7 +9,8 @@ public class EnemySpawn : MonoBehaviour
     public Vector2 houseBottomRight;
 
 
-    private float[] weights;
+    private float[] spawnWeights;
+    private int spawnedEnemies;
 
     [System.Serializable]
     public struct Enemy
@@ -22,12 +22,12 @@ public class EnemySpawn : MonoBehaviour
 
     void Awake()
     {
-        weights = NormalizedSpawnWeight();
+        spawnWeights = NormalizedSpawnWeight();
     }
 
-    public void Spawn(MapController controller)
+    public void InitialSpawn()
     {
-        var gridSize = controller.BackgroundTilemap.size;
+        var mapController = GameManager.Instance.mapController;
 
         for (int y = 20; y < 50; y++)
         {
@@ -36,7 +36,7 @@ public class EnemySpawn : MonoBehaviour
 
                 var tilePos = new Vector3Int(x, y, 0);
 
-                if (controller.ObstacleTilemap.GetTile(tilePos))
+                if (mapController.ObstacleTilemap.GetTile(tilePos))
                     continue;
 
                 //is tile in house?
@@ -44,7 +44,7 @@ public class EnemySpawn : MonoBehaviour
                 && y >= houseBottomRight.y && y <= houseTopLeft.y)
                     continue;
 
-                var tile = controller.BackgroundTilemap.GetTile(tilePos);
+                var tile = mapController.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
                 if (tile.name == "Floor")
                 {
@@ -52,14 +52,39 @@ public class EnemySpawn : MonoBehaviour
                     if (random < spawnProbability)
                     {
                         var pos = new Vector3(x + 0.5f, y + 0.5f, -4.0f);
-                        var enemy = GetSpawnEnemy(weights);
-                        var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
-                        enemyGameObject.transform.SetParent(transform);
+                        Spawn(pos);
                     }
                 }
             }
         }
     }
+
+    private void RandomSpawn()
+    {
+        var mapController = GameManager.Instance.mapController;
+        for (int i = 0; i < 100; i++)
+        {
+            int randX = Random.Range(20, 49);
+            int randY = Random.Range(-20, 19);
+            var pos = new Vector3Int(randX, randY, 0);
+            var tile = mapController.ObstacleTilemap.GetTile(pos);
+            if (tile == null)
+            {
+                Spawn(new Vector3(randX, randY, -4f));
+                break;
+            }
+        }
+
+    }
+
+    private void Spawn(Vector3 pos)
+    {
+        var item = GetSpawnEnemy(spawnWeights);
+        var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
+        itemGameObject.transform.SetParent(transform);
+        spawnedEnemies++;
+    }
+
 
     private Enemy GetSpawnEnemy(float[] weights)
     {
