@@ -78,4 +78,9 @@ public class PlayerController : MonoBehaviour
     {
         _inventory.Add(collectable);
 	}
+
+    public void Die()
+    {
+        print("I DIED!!!");
+    }
 }

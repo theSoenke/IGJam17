@@ -69,4 +69,13 @@ public class EnemyController : MonoBehaviour
 	public void Die() {
 		Destroy (gameObject);
 	}
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        var player = other.gameObject.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            player.Die();
+        }
+    }
 }
