@@ -33,26 +33,19 @@ public class PlayerController : MonoBehaviour
 
     private void CheckInputs()
     {
-        //TODO: implement button - item bindings
-        for(var i = 0; i < 4; i++)
-        {
-            var inputName = _inputUseItem[i];
-            Item item = null;
-            if (i == 0)
-            {
-                item = _inventory.bomb;
-            }
-
-            if (i == 1)
-            {
-                item = _inventory.candy;
-            }
-
-            if (Input.GetButtonDown(inputName) && item != null)
-            {
-                item.Use();
-            }
-        }
+		//TODO: implement button - item bindings
+		for(var i = 0; i < 4; i++)
+		{
+			var inputName = _inputUseItem[i];
+			if (Input.GetButtonDown(inputName))
+			{
+				if (i < _inventory.items.Length)
+				{
+					Item item = _inventory.items[i];
+					item.Use();
+				}
+			}
+		}
     }
 
     private void UpdatePosition()

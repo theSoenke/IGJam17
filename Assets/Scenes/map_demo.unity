@@ -30222,6 +30222,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114248590096825780, guid: 547beb09882d31849a0aaba140997495,
+        type: 2}
+      propertyPath: wallsBackground
+      value: 
+      objectReference: {fileID: 1879688475}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 547beb09882d31849a0aaba140997495, type: 2}
   m_IsPrefabParent: 0
