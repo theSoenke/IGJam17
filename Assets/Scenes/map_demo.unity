@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -5101,7 +5101,7 @@ MonoBehaviour:
   spawnProbability: 0.1
   enemies:
   - prefab: {fileID: 1426072967134380, guid: 85942482a8280f148ae94f7947e005f2, type: 2}
-    spawnProbability: 0.69
+    probability: 1
 --- !u!4 &1664447052
 Transform:
   m_ObjectHideFlags: 0
@@ -5202,6 +5202,10 @@ Prefab:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 9f2ccb4e4ab0c413186b418eb1c96bbb, type: 2}
+    - target: {fileID: 1623340962413932, guid: 547beb09882d31849a0aaba140997495, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 547beb09882d31849a0aaba140997495, type: 2}
   m_IsPrefabParent: 0

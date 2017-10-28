@@ -7,16 +7,23 @@ public class EnemySpawn : MonoBehaviour
     public float spawnProbability = 0.2f;
     public Enemy[] enemies;
 
+    private float[] weights;
+
     [System.Serializable]
     public struct Enemy
     {
         public GameObject prefab;
+        [Range(0, 1)]
         public float probability;
+    }
+
+    void Awake()
+    {
+        weights = NormalizedSpawnWeight();
     }
 
     public void Spawn (Tilemap tilemap)
     {
-        var spawnWeights = NormalizedSpawnWeight();
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -31,6 +38,7 @@ public class EnemySpawn : MonoBehaviour
                     if (random < spawnProbability)
                     {
                         var pos = new Vector3(x+0.5f,y-0.5f, -4.0f);
+                        var enemy = GetSpawnEnemy(weights);
                         var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
                     }

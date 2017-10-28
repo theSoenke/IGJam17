@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour {
 	void Update () {
 		var random = Random.Range(0.0f, 1.0f);
 		if (random > switchDirectionProbability) {
-			int randomHeading = Random.Range (0, 3);
+			int randomHeading = Random.Range (0, 4);
 			float vert = 0.0f, horiz = 0.0f;
 			switch (randomHeading) {
 			case 0:
