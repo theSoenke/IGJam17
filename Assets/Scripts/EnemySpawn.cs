@@ -13,10 +13,11 @@ public class EnemySpawn : MonoBehaviour
     public struct Enemy
     {
         public GameObject prefab;
+        [Range(0, 1)]
         public float probability;
     }
 
-    void Start()
+    void Awake()
     {
         weights = NormalizedSpawnWeight();
     }
