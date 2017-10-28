@@ -38,6 +38,7 @@ public class MapController : MonoBehaviour
     {
         _grid = GetComponent<Grid>();
         _gridInfo = GetComponent<GridInformation>();
+        DestroyTile(new Vector3(3, 33));
     }
 
     void Update()
@@ -46,7 +47,29 @@ public class MapController : MonoBehaviour
 
     public void DestroyTile(Vector3 worldPosition)
     {
-        //TODO
+        var gridPos = Vector3Int.FloorToInt(worldPosition);
+        var tile = _foreground.GetTile(gridPos);
+
+        if (tile == _indestructibleWallTile)
+            return;
+
+        ExplodeCell(gridPos);
+
+        var directions = new[] {new Vector3Int(0,1,0),
+                                new Vector3Int(0,-1,0),
+                                new Vector3Int(1,0,0),
+                                new Vector3Int(-1,0,0)};
+
+        foreach (var dir in directions)
+        {
+            var candidatePos = gridPos + dir;
+            gridPos += dir;
+            var candidateTile = _foreground.GetTile(candidatePos);
+            if (candidateTile != _indestructibleWallTile)
+                ExplodeCell(candidatePos);
+
+            //TODO: kill zombies in circle with radius = 1u
+        }
     }
 
     public void BuildWall(Vector3 worldPosition)
@@ -61,17 +84,14 @@ public class MapController : MonoBehaviour
     private void ExplodeCell(Vector3Int position)
     {
         Debug.Log(_indestructibleWallTile.name);
-        if (_foreground.GetTile(position) && _foreground.GetTile(position).name == _indestructibleWallTile.name)
+        if (_foreground.GetTile(position) && _foreground.GetTile(position) == _indestructibleWallTile)
             return;
 
         _gridInfo.ErasePositionProperty(position, k_Key);
         _gridInfo.SetPositionProperty(position, k_Key, 1);
-        foreach (var pos in new BoundsInt(position.x - 1, position.y - 1, position.z, 3, 3, 1).allPositionsWithin)
+        if (_foreground.GetTile(position) != null)
         {
-            if (_foreground.GetTile(pos) != null)
-            {
-                _background.SetTile(pos, _explodedFloorTile);
-            }
+            _background.SetTile(position, _explodedFloorTile);
         }
         _foreground.SetTile(position, null);
 
