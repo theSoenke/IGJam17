@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class EnemySpawn : MonoBehaviour
+public class ItemSpawn : MonoBehaviour
 {
-    [Range(0,1)]
+    [Range(0, 1)]
     public float spawnProbability = 0.2f;
-    public Enemy[] enemies;
+    public Item[] items;
 
     [System.Serializable]
-    public struct Enemy
+    public struct Item
     {
         public GameObject prefab;
-        public float spawnProbability;
+        public float probability;
     }
 
-    public void Spawn (Tilemap tilemap)
-	{
-	    var spawnWeights = NormalizedSpawnWeight();
+    public void Spawn(Tilemap tilemap)
+    {
+        var spawnWeights = NormalizedSpawnWeight();
         var gridSize = tilemap.size;
         for (int y = 0; y < gridSize.y; y++)
         {
@@ -30,9 +30,9 @@ public class EnemySpawn : MonoBehaviour
                     float random = Random.Range(0, 1f);
                     if (random < spawnProbability)
                     {
-                        var pos = new Vector3(x+0.5f,y-0.5f,0);
-                        var enemy = GetSpawnEnemy(spawnWeights);
-                        var enemyGameObject = Instantiate(enemy.prefab, pos, Quaternion.identity);
+                        var pos = new Vector3(x + 0.5f, y - 0.5f, 0);
+                        var item = GetSpawnItem(spawnWeights);
+                        var enemyGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
                         enemyGameObject.transform.SetParent(transform);
                     }
                 }
@@ -40,35 +40,35 @@ public class EnemySpawn : MonoBehaviour
         }
     }
 
-    private Enemy GetSpawnEnemy(float[] weights)
+    private Item GetSpawnItem(float[] weights)
     {
         float rand = Random.Range(0, 1f);
-        var enemy = new Enemy();
+        var item = new Item();
         double cumulative = 0.0;
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < items.Length; i++)
         {
             cumulative += weights[i];
             if (rand < cumulative)
             {
-                enemy = enemies[i];
+                item = items[i];
             }
         }
 
-        return enemy;
+        return item;
     }
 
     private float[] NormalizedSpawnWeight()
     {
-        var weights = new float[enemies.Length];
+        var weights = new float[items.Length];
         var weightSum = 0f;
-        foreach (Enemy enemy in enemies)
+        foreach (Item item in items)
         {
-            weightSum += enemy.spawnProbability;
+            weightSum += item.probability;
         }
 
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < items.Length; i++)
         {
-            weights[i] = enemies[i].spawnProbability / weightSum;
+            weights[i] = items[i].probability / weightSum;
         }
 
         return weights;
