@@ -69,7 +69,15 @@ public class EnemyController : MonoBehaviour
 //        Gizmos.DrawLine(transform.position, transform.position + dir);
 //    }
 
+	public void Die() {
+		Destroy (gameObject);
+	}
+
 	public void InflictDamage() {
 		health -= 50.0f;
+
+		if (health < 0.0f) {
+			Die ();
+		}
 	}
 }

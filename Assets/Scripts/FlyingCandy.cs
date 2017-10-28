@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlyingCandy : MonoBehaviour {
 	private int zombieHits = 0;
-	public int maxZombieHits = 5;
+	public int maxZombieHits = 3;
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -17,7 +17,7 @@ public class FlyingCandy : MonoBehaviour {
 		if (enemyController != null) {
 			enemyController.InflictDamage();
 			zombieHits ++;
-			if (zombieHits > maxZombieHits) {
+			if (zombieHits >= maxZombieHits) {
 				Destroy (gameObject);
 			}
 		}
