@@ -124,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b86e9762f9a48b2bcd5292ed62575c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchDirectionProbability: 0.999
+  switchDirectionProbability: 0.99
+  destroyTime: 2
 --- !u!212 &212236067519812512
 SpriteRenderer:
   m_ObjectHideFlags: 1
