@@ -14,9 +14,9 @@ public class PumpkinBomb : MonoBehaviour
 
         if (elapsed >= countdown &! isDetonatingWithQuiteSomeBang)
         {
+            isDetonatingWithQuiteSomeBang = true;
             var explodePos = new Vector3(transform.position.x, transform.position.y, 0);
             GameManager.Instance.mapController.DestroyTile(explodePos);
-            isDetonatingWithQuiteSomeBang = true;
             //TODO: takre care to not destroy gameObject before attached animatins are finished
             Destroy(gameObject);
         }
