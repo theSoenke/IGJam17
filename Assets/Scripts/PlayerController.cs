@@ -93,9 +93,8 @@ public class PlayerController : MonoBehaviour
     {
         var pos = new Vector3(
                         Mathf.Floor(transform.position.x) + 0.5f,
-                        Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
+			Mathf.Floor(transform.position.y) + 0.5f, -7.0f) + prevInputVector / 3.0f;
         var candy = Instantiate(_prefabCandy, pos, Quaternion.identity);
-        print(prevInputVector);
         candy.GetComponent<Rigidbody2D>().AddForce(500.0f * prevInputVector);
         _inventory.Candy--;
     }
