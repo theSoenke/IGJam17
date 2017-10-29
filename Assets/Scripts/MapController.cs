@@ -40,10 +40,6 @@ public class MapController : MonoBehaviour
         _gridInfo = GetComponent<GridInformation>();
     }
 
-    void Update()
-    {
-    }
-
     public void DestroyTile(Vector3 worldPosition)
     {
         var gridPos = Vector3Int.FloorToInt(worldPosition);
@@ -66,8 +62,17 @@ public class MapController : MonoBehaviour
             if (candidateTile != _indestructibleWallTile)
                 ExplodeCell(candidatePos);
 
-            //TODO: kill zombies in circle with radius = 1u
+            
         }
+        var targetEnemies = GameManager.Instance.GetEnemiesAt(gridPos, 1);
+        targetEnemies.ForEach(e =>
+        {
+            e.Die();
+        });
+
+        if (Vector2.Distance(GameManager.Instance.player.transform.position, worldPosition) < 1)
+            GameManager.Instance.player.Die();
+
     }
 
     public void BuildWall(Vector3 worldPosition)
@@ -75,13 +80,12 @@ public class MapController : MonoBehaviour
         var tile = _foreground.GetTile(Vector3Int.FloorToInt(worldPosition));
         if (tile == null)
         {
-            _foreground.SetTile(Vector3Int.RoundToInt(worldPosition), _destructibleWallTile);
+            _foreground.SetTile(Vector3Int.RoundToInt((Vector2)worldPosition), _destructibleWallTile);
         }
     }
 
     private void ExplodeCell(Vector3Int position)
     {
-        Debug.Log(_indestructibleWallTile.name);
         if (_foreground.GetTile(position) && _foreground.GetTile(position) == _indestructibleWallTile)
             return;
 

@@ -471,7 +471,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -16, y: -16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1072308013
 MonoBehaviour:
@@ -492,7 +492,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300020, guid: d3d8c1eae533a74469328964f957ca5d, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 0be80ca9f6161124eaf75ff4024ed63f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -625,7 +625,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300020, guid: d3d8c1eae533a74469328964f957ca5d, type: 3}
+  m_Sprite: {fileID: 21300002, guid: e75876b751071f44fb35332d9cd2314f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -735,13 +735,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9500054bb8970214eb31cc30d484799c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnProbability: 0.1
+  spawnProbability: 0.05
   enemies:
   - prefab: {fileID: 1671324200318664, guid: 695e54a1d05f42847acf41cab14b9bb2, type: 2}
     probability: 1
   houseTopLeft: {x: 0, y: 0}
   houseBottomRight: {x: 0, y: 0}
-  maxSpawedEnimies: 50
+  maxSpawnRate: 10
 --- !u!4 &1664447052
 Transform:
   m_ObjectHideFlags: 0
@@ -823,7 +823,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1753332799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 357, y: -171.5, z: 0}
+  m_LocalPosition: {x: 360, y: -174.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 32847043}
@@ -834,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5, y: 5}
+  m_AnchoredPosition: {x: -2, y: 2}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1753332801
@@ -946,12 +946,12 @@ Prefab:
     - target: {fileID: 114248590096825780, guid: 547beb09882d31849a0aaba140997495,
         type: 2}
       propertyPath: empty.a
-      value: 0.78431374
+      value: 0.8627451
       objectReference: {fileID: 0}
     - target: {fileID: 114248590096825780, guid: 547beb09882d31849a0aaba140997495,
         type: 2}
       propertyPath: filled.a
-      value: 0.78431374
+      value: 0.8627451
       objectReference: {fileID: 0}
     - target: {fileID: 60015529556956084, guid: 547beb09882d31849a0aaba140997495,
         type: 2}
@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnProbability: 0.1
   items:
-  - prefab: {fileID: 114512521328611790, guid: c485c892f5ddb9f4e99c195491f72d9a, type: 2}
+  - prefab: {fileID: 114194689234875184, guid: 8014043b4e1dbf34da7759050b555946, type: 2}
     probability: 1
   maxSpawnRate: 100
 --- !u!4 &2023432095

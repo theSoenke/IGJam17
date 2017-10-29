@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class FlyingCandy : MonoBehaviour {
 	private int zombieHits = 0;
@@ -19,9 +20,14 @@ public class FlyingCandy : MonoBehaviour {
 				Destroy (gameObject);
 			}
 		}
-//		var mapController = collision.gameObject.GetComponent<MapController>();
-//		if (mapController != null) {
-//
-//		}
-	}
+        var tilemap = collision.gameObject.GetComponent<Tilemap>();
+        if(tilemap != null)
+        {
+            Destroy(gameObject, 0.05f);
+        }
+        //else
+        //{
+        //    Destroy(gameObject, 0.05f);
+        //}
+    }
 }

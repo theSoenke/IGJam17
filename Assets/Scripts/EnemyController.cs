@@ -67,7 +67,8 @@ public class EnemyController : MonoBehaviour
 //    }
 
 	public void Die() {
-		Destroy (gameObject);
+	    GameManager.Instance.RegisterEnemyDeath(this);
+        Destroy (gameObject);
 	}
 
     void OnCollisionEnter2D(Collision2D other)

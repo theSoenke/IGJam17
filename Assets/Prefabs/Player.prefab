@@ -24,9 +24,10 @@ GameObject:
   - component: {fileID: 50869072885509992}
   - component: {fileID: 212069022237343434}
   - component: {fileID: 60015529556956084}
+  - component: {fileID: 95783417623695784}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +60,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9f2ccb4e4ab0c413186b418eb1c96bbb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -96,6 +97,23 @@ PolygonCollider2D:
       - {x: -0.090173244, y: -0.4034958}
       - {x: 0.08598304, y: -0.4001522}
       - {x: 0.38104463, y: -0.060178757}
+--- !u!95 &95783417623695784
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623340962413932}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 831128a82b144b24e92c5ce0c81dbcbf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114248590096825780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,8 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombBackground: {fileID: 0}
   candyBackground: {fileID: 0}
-  empty: {r: 0.5735294, g: 0.5735294, b: 0.5735294, a: 0}
-  filled: {r: 1, g: 1, b: 1, a: 0}
+  wallsBackground: {fileID: 0}
+  empty: {r: 0.5735294, g: 0.5735294, b: 0.5735294, a: 0.8627451}
+  filled: {r: 1, g: 1, b: 1, a: 0.8627451}
 --- !u!114 &114305538826493668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,15 +141,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779c91830d870124ab787fafe670f185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: []
   _inputUseItem:
-  - Item1
-  - Item2
-  - Item3
+  - Bombe
+  - Candy
+  - Wall
   - Item4
-  _movementSpeed: 10
+  _movementSpeed: 4
   _inputAxisX: Horizontal
   _inputAxisY: Vertical
+  _prefabCandy: {fileID: 1703557895076592, guid: 072ac8adf45c7499492dbb31e030b1f8,
+    type: 2}
+  _prefabBomb: {fileID: 1914143791406500, guid: 6641793cd7b54384696f751f1fa8bd99,
+    type: 2}
 --- !u!212 &212069022237343434
 SpriteRenderer:
   m_ObjectHideFlags: 1

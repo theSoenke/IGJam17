@@ -10,14 +10,33 @@ public class PlayerInventory : MonoBehaviour
     public Color empty;
     public Color filled;
 
-    public int bombs;
-    private int candys;
-    private int walls;
+    private int bombs = 10;
+    private int candy =  10;
+    private int walls = 10;
+    private int mines = 2;
+
+    public int Bombs
+    {
+        get { return bombs; }
+        set { bombs = value; }
+    }
+
+    public int Candy
+    {
+        get { return candy; }
+        set { candy = value; }
+    }
+
+    public int Walls
+    {
+        get { return walls; }
+        set { walls = value; }
+    }
 
     void Update ()
 	{
 	    bombBackground.color = bombs <= 0 ? empty : filled;
-	    candyBackground.color = candys <= 0 ? empty : filled;
+	    candyBackground.color = candy <= 0 ? empty : filled;
 	    wallsBackground.color = walls <= 0 ? empty : filled;
     }
 
@@ -29,7 +48,13 @@ public class PlayerInventory : MonoBehaviour
                 bombs++;
                 break;
             case ItemType.Gun:
-                candys++;
+                candy++;
+                break;
+            case ItemType.Wall:
+                walls++;
+                break;
+            case ItemType.Mine:
+                mines++;
                 break;
         }
     }

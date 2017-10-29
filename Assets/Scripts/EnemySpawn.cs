@@ -31,6 +31,11 @@ public class EnemySpawn : MonoBehaviour
         {
             spawnedLastMinute -= Time.deltaTime / 60;
         }
+
+        if (spawnedLastMinute < maxSpawnRate)
+        {
+            RandomSpawn();
+        }
     }
 
     public void InitialSpawn()
@@ -92,6 +97,7 @@ public class EnemySpawn : MonoBehaviour
         var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
         spawnedLastMinute++;
+        GameManager.Instance.RegisterEnemySpawn(itemGameObject.GetComponent<EnemyController>());
     }
 
 
