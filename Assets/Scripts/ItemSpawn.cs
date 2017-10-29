@@ -88,18 +88,28 @@ public class ItemSpawn : MonoBehaviour
     private Item GetSpawnItem(float[] weights)
     {
         float rand = Random.Range(0, 1f);
-        var item = new Item();
-        double cumulative = 0.0;
-        for (int i = 0; i < items.Length; i++)
+        if (rand < 0.8f)
         {
-            cumulative += weights[i];
-            if (rand < cumulative)
-            {
-                item = items[i];
-            }
+            return items[0];
+        } else
+        {
+            return items[1];
         }
 
-        return item;
+        // FIXME broken with multiple items
+        //float rand = Random.Range(0, 1f);
+        //var item = new Item();
+        //double cumulative = 0.0;
+        //for (int i = 0; i < items.Length; i++)
+        //{
+        //    cumulative += weights[i];
+        //    if (rand < cumulative)
+        //    {
+        //        item = items[i];
+        //    }
+        //}
+
+        //return item;
     }
 
     private float[] NormalizedSpawnWeight()
