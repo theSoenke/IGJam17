@@ -51,27 +51,30 @@ public class PlayerController : MonoBehaviour
 			var inputName = _inputUseItem[i];
 			if (Input.GetButtonDown(inputName))
 			{
-			    if (i == 0)
+			    if (i == 0 && _inventory.Bombs > 0)
 			    {
 			        var pos = new Vector3(
 			            Mathf.Floor(transform.position.x) + 0.5f,
 			            Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
                     Instantiate(_prefabBomb, pos, Quaternion.identity);
-                }
+			        _inventory.Bombs--;
+			    }
 
-				if (i == 1) {
+				if (i == 1 && _inventory.Candy > 0) {
 					var pos = new Vector3 (
 						Mathf.Floor(transform.position.x) + 0.5f,
 						Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
 					var candy = Instantiate (_prefabCandy, pos, Quaternion.identity);
 					print (prevInputVector);
 					candy.GetComponent<Rigidbody2D> ().AddForce (500.0f * prevInputVector);
+				    _inventory.Candy--;
 				}
 
-			    if (i == 2)
+			    if (i == 2 && _inventory.Walls > 0)
 			    {
 			        nextWallPos = Vector3Int.FloorToInt(transform.position);
-                }
+			        _inventory.Walls--;
+			    }
 			}
 		}
     }
