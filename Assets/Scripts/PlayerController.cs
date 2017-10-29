@@ -155,6 +155,10 @@ public class PlayerController : MonoBehaviour
             return;
         print("I DIED!!!");
         animator.SetTrigger(ANIM_DIE);
-        Destroy(gameObject, 1);
+    }
+
+    public void FinishedDying()
+    {
+        GameManager.Instance.GoBackToStart();
     }
 }
