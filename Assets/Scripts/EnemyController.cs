@@ -7,11 +7,13 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
+    private bool _isDying = false;
 
     private const string ANIM_MOVE_LEFT = "MoveLeft";
     private const string ANIM_MOVE_RIGHT = "MoveRight";
     private const string ANIM_MOVE_UP = "MoveTop";
     private const string ANIM_MOVE_DOWN = "MoveDown";
+    private const string ANIM_MOVE_DIE = "Die";
     private const string ANIM_MOVEMENT_SPEED = "MovementSpeed";
 
     // Use this for initialization
@@ -21,9 +23,7 @@ public class EnemyController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void DoMovementStuff()
     {
         var random = Random.Range(0.0f, 1.0f);
         if (random > switchDirectionProbability)
@@ -60,6 +60,15 @@ public class EnemyController : MonoBehaviour
         _rigidbody.velocity = 0.5f * velocity;
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (!_isDying)
+            DoMovementStuff();
+        else
+            _rigidbody.velocity = Vector2.zero;
+    }
+
 //    private void OnDrawGizmos()
 //    {
 //        var dir = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0);
@@ -67,8 +76,12 @@ public class EnemyController : MonoBehaviour
 //    }
 
 	public void Die() {
+        if (_isDying)
+            return;
+        _isDying = true;
 	    GameManager.Instance.RegisterEnemyDeath(this);
-        Destroy (gameObject);
+        _animator.SetTrigger(ANIM_MOVE_DIE);
+        Destroy (gameObject,2);
 	}
 
     void OnCollisionEnter2D(Collision2D other)
