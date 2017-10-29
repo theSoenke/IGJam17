@@ -17,12 +17,8 @@ public class FlyingCandy : MonoBehaviour {
 				Destroy (gameObject);
 			}
 		}
-        var tilemap = collision.gameObject.GetComponent<Tilemap>();
-        if(tilemap != null)
-        {
-            Destroy(gameObject, 0.05f);
-        }
-        //else
+        //var tilemap = collision.gameObject.GetComponent<Tilemap>();
+        //if(tilemap != null)
         //{
         //    Destroy(gameObject, 0.05f);
         //}
