@@ -1050,7 +1050,9 @@ MonoBehaviour:
     probability: 1
   - prefab: {fileID: 114194689234875184, guid: c587dda64ec94e24daefa5a1888ac300, type: 2}
     probability: 1
-  maxSpawnRate: 100
+  - prefab: {fileID: 114194689234875184, guid: d92491f72875b6040a88998a3fa2e634, type: 2}
+    probability: 1
+  maxSpawnRate: 60
 --- !u!4 &2023432095
 Transform:
   m_ObjectHideFlags: 0
