@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
     public void RegisterEnemyDeath(EnemyController enemy)
     {
         _enemies.Remove(enemy);
+    }
+
+    public void GoBackToStart()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public List<EnemyController> GetEnemiesAt(Vector3 pos, float radius)
