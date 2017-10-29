@@ -88,10 +88,14 @@ public class ItemSpawn : MonoBehaviour
     private Item GetSpawnItem(float[] weights)
     {
         float rand = Random.Range(0, 1f);
-        if (rand < 0.8f)
+        if (rand < 0.5f)
+        {
+            return items[2];
+        } else if(rand < 0.8f)
         {
             return items[0];
-        } else
+        }
+        else
         {
             return items[1];
         }

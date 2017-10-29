@@ -10,10 +10,10 @@ public class PlayerInventory : MonoBehaviour
     public Color empty;
     public Color filled;
 
-    private int bombs = 10;
-    private int candy =  10;
-    private int walls = 10;
-    private int mines = 2;
+    private int bombs = 5;
+    private int candy =  5;
+    private int walls = 0;
+    private int mines = 0;
 
     public int Bombs
     {
