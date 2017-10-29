@@ -29,7 +29,7 @@ public class EnemySpawn : MonoBehaviour
     {
         if (spawnedLastMinute > 0)
         {
-            spawnedLastMinute -= Time.deltaTime / 60;
+            spawnedLastMinute -= Time.deltaTime;
         }
 
         if (spawnedLastMinute < maxSpawnRate)
@@ -46,16 +46,8 @@ public class EnemySpawn : MonoBehaviour
         {
             for (int x = -20; x < 20; x++)
             {
-
                 var tilePos = new Vector3Int(x, y, 0);
-
-                if (mapController.ObstacleTilemap.GetTile(tilePos))
-                    continue;
-
-                //is tile in house?
-                if (x >= houseTopLeft.x && x <= houseBottomRight.x
-                && y >= houseBottomRight.y && y <= houseTopLeft.y)
-                    continue;
+                if (!IsPlaceablePos(tilePos)) continue;
 
                 var tile = mapController.BackgroundTilemap.GetTile(tilePos);
                 if (tile == null) continue;
@@ -77,13 +69,16 @@ public class EnemySpawn : MonoBehaviour
         var mapController = GameManager.Instance.mapController;
         for (int i = 0; i < 100; i++)
         {
-            int randX = Random.Range(20, 49);
-            int randY = Random.Range(-20, 19);
-            var pos = new Vector3Int(randX, randY, 0);
-            var tile = mapController.ObstacleTilemap.GetTile(pos);
+            int x = Random.Range(-17, 15);
+            int y = Random.Range(22, 49);
+            var tilePos = new Vector3Int(x, y, 0);
+
+            if (!IsPlaceablePos(tilePos)) return;
+
+            var tile = mapController.ObstacleTilemap.GetTile(tilePos);
             if (tile == null)
             {
-                Spawn(new Vector3(randX, randY, -4f));
+                Spawn(new Vector3(x, y, -4f));
                 break;
             }
         }
@@ -100,6 +95,23 @@ public class EnemySpawn : MonoBehaviour
         GameManager.Instance.RegisterEnemySpawn(itemGameObject.GetComponent<EnemyController>());
     }
 
+    private bool IsPlaceablePos(Vector3Int pos)
+    {
+        var mapController = GameManager.Instance.mapController;
+        if (mapController.ObstacleTilemap.GetTile(pos))
+        {
+            return false;
+        }
+
+        //is tile in house?
+        if (pos.x >= houseTopLeft.x && pos.x <= houseBottomRight.x
+        && pos.y >= houseBottomRight.y && pos.y <= houseTopLeft.y)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     private Enemy GetSpawnEnemy(float[] weights)
     {

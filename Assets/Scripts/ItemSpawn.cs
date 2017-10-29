@@ -30,6 +30,12 @@ public class ItemSpawn : MonoBehaviour
         {
             spawnedLastMinute -= Time.deltaTime / 60;
         }
+
+
+        if (spawnedLastMinute < maxSpawnRate)
+        {
+            RandomSpawn();
+        }
     }
 
     public void Spawn(Vector3 pos)
@@ -43,28 +49,38 @@ public class ItemSpawn : MonoBehaviour
 
     public void InitialSpawn()
     {
-        var mapController = GameManager.Instance.mapController;
-        var gridSize = mapController.BackgroundTilemap.size;
-        for (int y = 0; y < gridSize.y; y++)
+        for (int i = 0; i < maxSpawnRate; i++)
         {
-            for (int x = -20; x < gridSize.x; x++)
+            RandomSpawn();
+        }
+    }
+
+    private bool IsPlaceablePos(Vector3Int pos)
+    {
+        var mapController = GameManager.Instance.mapController;
+        if (mapController.ObstacleTilemap.GetTile(pos))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void RandomSpawn()
+    {
+        var mapController = GameManager.Instance.mapController;
+        for (int i = 0; i < 100; i++)
+        {
+            int x = Random.Range(-17, 15);
+            int y = Random.Range(22, 49);
+            var tilePos = new Vector3Int(x, y, 0);
+
+            if (!IsPlaceablePos(tilePos)) return;
+            var tile = mapController.ObstacleTilemap.GetTile(tilePos);
+            if (tile == null)
             {
-                var tilePos = new Vector3Int(x, y, 0);
-
-                if (mapController.ObstacleTilemap.GetTile(tilePos))
-                    continue;
-
-                var tile = mapController.BackgroundTilemap.GetTile(tilePos);
-                if (tile == null) continue;
-                if (tile.name == "Floor")
-                {
-                    float random = Random.Range(0, 1f);
-                    if (random < spawnProbability)
-                    {
-                        var pos = new Vector3(x + 0.5f, y + 0.5f, -1);
-                        Spawn(pos);
-                    }
-                }
+                Spawn(new Vector3(x + 0.5f, y + 0.5f, -1));
+                break;
             }
         }
     }
@@ -72,18 +88,28 @@ public class ItemSpawn : MonoBehaviour
     private Item GetSpawnItem(float[] weights)
     {
         float rand = Random.Range(0, 1f);
-        var item = new Item();
-        double cumulative = 0.0;
-        for (int i = 0; i < items.Length; i++)
+        if (rand < 0.8f)
         {
-            cumulative += weights[i];
-            if (rand < cumulative)
-            {
-                item = items[i];
-            }
+            return items[0];
+        } else
+        {
+            return items[1];
         }
 
-        return item;
+        // FIXME broken with multiple items
+        //float rand = Random.Range(0, 1f);
+        //var item = new Item();
+        //double cumulative = 0.0;
+        //for (int i = 0; i < items.Length; i++)
+        //{
+        //    cumulative += weights[i];
+        //    if (rand < cumulative)
+        //    {
+        //        item = items[i];
+        //    }
+        //}
+
+        //return item;
     }
 
     private float[] NormalizedSpawnWeight()

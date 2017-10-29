@@ -7,11 +7,8 @@ public class FlyingCandy : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		var player = collision.gameObject.GetComponent<PlayerController>();
-		if (player != null)
-		{
-			return;
-		}
+        if (collision.gameObject.tag == "Player")
+            return;
 		var enemyController = collision.gameObject.GetComponent<EnemyController>();
 		if (enemyController != null) {
 			enemyController.Die();
