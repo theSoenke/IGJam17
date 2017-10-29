@@ -25,11 +25,13 @@ public class PlayerController : MonoBehaviour
     private bool buildWall;
     private Vector3 prevInputVector;
     private Animator animator;
+    private bool _isDying = false;
 
     private const string ANIM_MOVE_LEFT = "WalkLeft";
     private const string ANIM_MOVE_RIGHT = "WalkRight";
     private const string ANIM_MOVE_UP = "WalkUp";
     private const string ANIM_MOVE_DOWN = "WalkDown";
+    private const string ANIM_DIE = "Die";
 
 
     // Use this for initialization
@@ -44,6 +46,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (_isDying)
+            return;
         UpdatePosition();
         CheckInputs();
 
@@ -147,6 +151,10 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        if (_isDying)
+            return;
         print("I DIED!!!");
+        animator.SetTrigger(ANIM_DIE);
+        Destroy(gameObject, 1);
     }
 }
