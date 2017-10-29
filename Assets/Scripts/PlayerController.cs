@@ -47,15 +47,19 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (_isDying)
-            return;
-        UpdatePosition();
-        CheckInputs();
-
-        if (buildWall && Vector3Int.FloorToInt(transform.position) != nextWallPos)
+            _rigidbody.velocity = Vector2.zero;
+        else
         {
-            GameManager.Instance.mapController.BuildWall(nextWallPos);
-            buildWall = false;
+            UpdatePosition();
+            CheckInputs();
+
+            if (buildWall && Vector3Int.FloorToInt(transform.position) != nextWallPos)
+            {
+                GameManager.Instance.mapController.BuildWall(nextWallPos);
+                buildWall = false;
+            }
         }
+        
     }
 
     private void SpawnBomb()
