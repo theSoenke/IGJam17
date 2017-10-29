@@ -80,7 +80,7 @@ public class MapController : MonoBehaviour
         var tile = _foreground.GetTile(Vector3Int.FloorToInt(worldPosition));
         if (tile == null)
         {
-            _foreground.SetTile(Vector3Int.RoundToInt(worldPosition), _destructibleWallTile);
+            _foreground.SetTile(Vector3Int.RoundToInt((Vector2)worldPosition), _destructibleWallTile);
         }
     }
 
