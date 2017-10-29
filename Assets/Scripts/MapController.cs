@@ -40,10 +40,6 @@ public class MapController : MonoBehaviour
         _gridInfo = GetComponent<GridInformation>();
     }
 
-    void Update()
-    {
-    }
-
     public void DestroyTile(Vector3 worldPosition)
     {
         var gridPos = Vector3Int.FloorToInt(worldPosition);
@@ -71,7 +67,6 @@ public class MapController : MonoBehaviour
         var targetEnemies = GameManager.Instance.GetEnemiesAt(gridPos, 1);
         targetEnemies.ForEach(e =>
         {
-            GameManager.Instance.RegisterEnemyDeath(e);
             e.Die();
         });
 

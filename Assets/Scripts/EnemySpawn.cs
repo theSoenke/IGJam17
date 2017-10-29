@@ -31,6 +31,11 @@ public class EnemySpawn : MonoBehaviour
         {
             spawnedLastMinute -= Time.deltaTime / 60;
         }
+
+        if (spawnedLastMinute < maxSpawnRate)
+        {
+            RandomSpawn();
+        }
     }
 
     public void InitialSpawn()
