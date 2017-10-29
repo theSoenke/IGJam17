@@ -66,8 +66,18 @@ public class MapController : MonoBehaviour
             if (candidateTile != _indestructibleWallTile)
                 ExplodeCell(candidatePos);
 
-            //TODO: kill zombies in circle with radius = 1u
+            
         }
+        var targetEnemies = GameManager.Instance.GetEnemiesAt(gridPos, 1);
+        targetEnemies.ForEach(e =>
+        {
+            GameManager.Instance.RegisterEnemyDeath(e);
+            e.Die();
+        });
+
+        if (Vector2.Distance(GameManager.Instance.player.transform.position, worldPosition) < 1)
+            GameManager.Instance.player.Die();
+
     }
 
     public void BuildWall(Vector3 worldPosition)
@@ -81,7 +91,6 @@ public class MapController : MonoBehaviour
 
     private void ExplodeCell(Vector3Int position)
     {
-        Debug.Log(_indestructibleWallTile.name);
         if (_foreground.GetTile(position) && _foreground.GetTile(position) == _indestructibleWallTile)
             return;
 

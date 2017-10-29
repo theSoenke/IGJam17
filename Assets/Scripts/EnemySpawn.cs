@@ -92,6 +92,7 @@ public class EnemySpawn : MonoBehaviour
         var itemGameObject = Instantiate(item.prefab, pos, Quaternion.identity);
         itemGameObject.transform.SetParent(transform);
         spawnedLastMinute++;
+        GameManager.Instance.RegisterEnemySpawn(itemGameObject.GetComponent<EnemyController>());
     }
 
 
