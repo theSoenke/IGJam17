@@ -70,7 +70,7 @@ public class MapController : MonoBehaviour
             e.Die();
         });
 
-        if (Vector2.Distance(GameManager.Instance.player.transform.position, worldPosition) < 1)
+        if (Vector2.Distance(GameManager.Instance.player.transform.position, worldPosition) <= 2)
             GameManager.Instance.player.Die();
 
     }
