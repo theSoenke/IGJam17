@@ -79,7 +79,7 @@ public class EnemyController : MonoBehaviour
 		targetPosition.y += velocity.y > 0.1 ? 1 : velocity.y < -0.1 ? -1 : 0;
 
 		var block = mapController.ObstacleTilemap.GetTile (targetPosition);
-		if (block == targetBlock && block != null && block.name == "Undestructible") {
+		if (block == targetBlock && block != null && (block == mapController.GetDestructibleTile() || block.name == "Undestructible")) {
 			destroyCountdown += Time.deltaTime;
 			print (destroyCountdown); 
 			if (destroyCountdown > destroyTime) {

@@ -18,6 +18,10 @@ public class MapController : MonoBehaviour
 
     public const string k_Key = "exploded";
 
+	public TileBase GetDestructibleTile() {
+		return _destructibleWallTile;
+	}
+
     public Tilemap BackgroundTilemap
     {
         get
