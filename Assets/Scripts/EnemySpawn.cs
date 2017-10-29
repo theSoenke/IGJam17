@@ -29,12 +29,14 @@ public class EnemySpawn : MonoBehaviour
     {
         if (spawnedLastMinute > 0)
         {
-            spawnedLastMinute -= Time.deltaTime / 60;
+            spawnedLastMinute -= Time.deltaTime;
         }
 
         if (spawnedLastMinute < maxSpawnRate)
         {
             RandomSpawn();
+
+            print("respawn");
         }
     }
 
