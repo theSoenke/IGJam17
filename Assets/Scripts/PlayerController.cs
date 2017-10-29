@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 						Mathf.Floor(transform.position.y) + 0.5f, -7.0f);
 					var candy = Instantiate (_prefabCandy, pos, Quaternion.identity);
 					print (prevInputVector);
-					candy.GetComponent<Rigidbody2D> ().AddForce (1000.0f * prevInputVector);
+					candy.GetComponent<Rigidbody2D> ().AddForce (500.0f * prevInputVector);
 				}
 
 			    if (i == 2)
